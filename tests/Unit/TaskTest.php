@@ -63,4 +63,14 @@ class TaskTest extends TestCase
 
         $this->assertTrue($task->isComplete());
     }
+
+    /**
+     * @test
+     */
+    public function a_task_belongs_to_a_user()
+    {
+        $task = factory(Task::class)->create();
+
+        $this->assertEquals($task->user_id, $task->user->id);
+    }
 }

@@ -8,7 +8,7 @@ class Task extends Model
 {
     protected $table = 'tasks';
 
-    protected $fillable = ['body', 'completed'];
+    protected $fillable = ['body', 'completed', 'user_id'];
 
     const TASK_COMPLETE = 1;
 
@@ -22,5 +22,10 @@ class Task extends Model
     public function complete()
     {
         $this->completed = self::TASK_COMPLETE;
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }
