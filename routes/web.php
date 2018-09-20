@@ -11,9 +11,10 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function() {
-    return redirect('/login');
+    return redirect('login');
 });
 
-Route::get('login', 'UserController@index');
-Route::post('login', 'UserController@login');
+Route::get('home', 'HomeController@index');
