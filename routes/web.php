@@ -17,4 +17,4 @@ Route::get('/', function() {
     return redirect('login');
 });
 
-Route::get('home', 'HomeController@index');
+Route::get('tasks', 'TaskController@index');
