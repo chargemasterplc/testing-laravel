@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
 
 class TaskController extends Controller
 {
@@ -19,8 +19,31 @@ class TaskController extends Controller
     public function index()
     {
         $this->user = Auth::user();
-        $this->tasks = User::find($this->user->id)->tasks;
 
-        return view('tasks.tasks')->with('tasks', $this->tasks);
+        $this->tasks = $this->user->tasks;
+
+        $data = [
+            'tasks' => $this->tasks,
+            'incompleteTasks' => $this->getIncompleteTasks(),
+        ];
+
+        return view('tasks.tasks')->with('data', $data);
+    }
+
+    public function create(Request $request)
+    {
+        $task = Task::create([
+            'body' => $request->body,
+            'user_id' => Auth::id()
+        ]);
+
+        return redirect('tasks');
+    }
+
+    private function getIncompleteTasks()
+    {
+        return $this->tasks->filter(function($task) {
+            return $task->completed === 0;
+        });
     }
 }

@@ -18,3 +18,4 @@ Route::get('/', function() {
 });
 
 Route::get('tasks', 'TaskController@index');
+Route::post('tasks', 'TaskController@create');

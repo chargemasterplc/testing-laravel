@@ -35,8 +35,28 @@ class TasksTest extends TestCase
 
         $response = $this->get('/tasks');
 
-        $data = $response->getOriginalContent();
+        $data = $response->getOriginalContent()->getData()['data']['tasks'];
 
-        $this->assertEquals(count($tasks), count($data->tasks));
+        $this->assertEquals(count($tasks), count($data));
+    }
+
+    /**
+     * @test
+     */
+    public function a_user_can_add_a_new_task()
+    {
+        $this->loginWithFakeUser();
+
+        $task = [
+            'body' => 'Do the shopping',
+            'user_id' => self::USER_ID,
+        ];
+
+        $this->post('/tasks', $task);
+
+        $user = Auth::user();
+        $tasks = $user->tasks;
+
+        $this->assertEquals(1, count($tasks));
     }
 }
