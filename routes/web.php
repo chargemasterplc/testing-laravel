@@ -11,6 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function() {
+    return redirect('/login');
 });
+
+Route::get('login', 'UserController@index');
+Route::post('login', 'UserController@login');
