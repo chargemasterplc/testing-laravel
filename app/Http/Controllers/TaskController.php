@@ -40,6 +40,15 @@ class TaskController extends Controller
         return redirect('tasks');
     }
 
+    public function completeTask($id)
+    {
+
+        $task = Task::find($id);
+        $task->complete();
+
+        return redirect('tasks');
+    }
+
     private function getIncompleteTasks()
     {
         return $this->tasks->filter(function($task) {

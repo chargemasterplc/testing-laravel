@@ -19,13 +19,19 @@
         <div id="tasks" class="row justify-content-center">
             @foreach ($data['tasks'] as $task)
                 <div class="col-4">
-                    <div class="card">
+                    <div class="card {{ $task->completed ? 'bg-success' : 'bg-warning' }}">
                         <div class="card-header">
                             {{ $task->created_at }}
                         </div>
                         <div class="card-body">
                             {{ $task->body }}
                         </div>
+                        @if (!$task->completed)
+                            <form action="/tasks/complete/{{$task->id}}" method="POST">
+                                @csrf
+                                <input type="submit" class="btn btn-success" value="Complete"/>
+                            </form>
+                        @endif
                     </div>
                 </div>
             @endforeach

@@ -59,4 +59,21 @@ class TasksTest extends TestCase
 
         $this->assertEquals(1, count($tasks));
     }
+
+    /**
+     * @test
+     */
+    public function a_user_can_complete_a_task()
+    {
+        $this->loginWithFakeUser();
+        $tasks = factory(Task::class, 5)->create([
+            'user_id' => self::USER_ID
+        ]);
+        $taskToBeCompleted = $tasks[0]->id;
+
+        $this->post('/tasks/complete/' . $taskToBeCompleted);
+
+        $task = Task::find($taskToBeCompleted);
+        $this->assertTrue(boolval($task->completed));
+    }
 }
